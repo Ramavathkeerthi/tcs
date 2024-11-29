@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class FormAlternatingString {
+    public static int maxWorthRemoved(String binaryString, int[] worth) {
+        int n = binaryString.length();
+        int totalWorth = 0;
+        for (int value : worth) {
+            totalWorth += value; // Sum of all worth values
+        }
+
+        int maxAlternatingWorth = 0;
+        char prevChar = ' '; // Placeholder for the previous character
+
+        // Calculate the maximum worth of the longest alternating string
+        for (int i = 0; i < n; i++) {
+            char currentChar = binaryString.charAt(i);
+            if (currentChar != prevChar) {
+                maxAlternatingWorth += worth[i];
+                prevChar = currentChar;
+            }
+        }
+
+        // Worth of characters to be removed
+        return totalWorth - maxAlternatingWorth;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input binary string
+        String binaryString = sc.nextLine();
+
+        // Input worth array
+        String[] worthStrings = sc.nextLine().split(" ");
+        int[] worth = new int[worthStrings.length];
+        for (int i = 0; i < worthStrings.length; i++) {
+            worth[i] = Integer.parseInt(worthStrings[i]);
+        }
+
+        // Compute and print the result
+        int result = maxWorthRemoved(binaryString, worth);
+        System.out.println(result);
+
+        sc.close();
+    }
+}
